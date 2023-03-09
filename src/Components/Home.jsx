@@ -5,6 +5,10 @@ import { PersonCircle } from 'react-bootstrap-icons'
 
 const Home = () => {
 
+  // (function(){
+  //   debugger;
+  // })()
+
   let arr = [1,1,1,1,1,1,1,1,1,1]
 
   return (
