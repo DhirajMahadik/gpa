@@ -21,9 +21,9 @@ display: flex;
         flex-direction: column;
         svg{
             font-size: 100px;
-            margin: auto;
+            margin: 10px auto ;
         }
-        h3{
+        h4{
             text-align: center;
         }
     }
@@ -31,12 +31,12 @@ display: flex;
         padding: 30px;
         .email{
             margin: 0 0 25px 0;
-            h3{
+            h4{
                 margin: 0 0 5px 0;
             }
         }
         .phone{
-            h3{
+            h4{
                 margin: 0 0 5px 0;
             }
         }
@@ -98,12 +98,41 @@ display: flex;
 
     .navigation{
         display: flex;
-        height: 200px;
+        flex-direction: column;
+        height: 150px;
         background-color: #0041cd26;
         /* box-shadow: #0041cd7a 0px 0px 20px 0px; */
         box-shadow: inset rgb(195 195 195) 0px 0px 20px 20px;
         .task-heading{
                 margin: auto;
+        }
+    }
+
+    .add-or-completed{
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        .add{
+            button{
+                background-color: darkgreen;
+                color: #fff;
+                padding: 7px 10px;
+                border: none;
+                border-radius: 12px 0 12px 0;
+                cursor: pointer;
+                margin-left: 11px;
+            }
+        }
+        .completed{
+            button{
+                background-color: goldenrod;
+                color: #fff;
+                padding: 7px 10px;
+                border: none;
+                border-radius: 12px 0 12px 0;
+                cursor: pointer;
+                margin-right: 11px;
+            }
         }
     }
     .task-container{
