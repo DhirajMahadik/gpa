@@ -141,25 +141,47 @@ display: flex;
             display: none;
         }
         .task{ 
-            height: 100px;
+            /* height: 100px; */
             background-color: white;
             margin: 20px;
             border-radius: 5px;
             box-shadow: #80808087 0px 0px 20px 0px;
             display: flex;
+            justify-content: space-between;
             .date-time{
                 display: flex;
+                flex-direction: column;
+                padding: 15px;
+                border-right: solid gray 1px;
+                width: 150px;
+                h5{
+                    text-align: center;
+                    text-transform: uppercase;
+                }
                 span{
                     margin: auto 10px;
                 }
             }
             .task-content{
+                width: 500px;
                 padding: 15px;
+                display: flex;
+                flex-direction: column;
+                h5{
+                    text-align: center;
+                    /* border-bottom: solid #000 1px; */
+                    text-transform: uppercase;
+                }
+                span{
+                    /* margin: auto; */
+                }
             }
             .task-actions{
                 padding: 10px;
+                border-left: solid gray 1px;
                 button{
                     margin: 5px;
+                    display: block;
                 }
             }
         }
