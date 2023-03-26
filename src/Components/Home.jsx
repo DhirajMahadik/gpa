@@ -20,7 +20,7 @@ setTask({...task, [e.target.name]: e.target.value})
 
 const onSubmitHandler = (e) =>{
   e.preventDefault();
-  fetch('http://localhost:5500/add-task', {method:"POST", body:JSON.stringify(Object.assign({task , id:user.id})), headers:{'Content-Type': 'application/json'}}).then((res)=>{
+  fetch('https://different-lingerie-goat.cyclic.app/add-task', {method:"POST", body:JSON.stringify(Object.assign({task , id:user.id})), headers:{'Content-Type': 'application/json'}}).then((res)=>{
     if(res.status === 200){
       getProfile()
     }
@@ -42,7 +42,7 @@ const getProfile =()=>{
   let token = localStorage.getItem('auth_token')
   console.log(token)
 
-fetch('http://localhost:5500/user-profile',{method:"GET" , headers:{"authorization": "Bearer " + token}}).then((res)=>{
+fetch('https://different-lingerie-goat.cyclic.app/user-profile',{method:"GET" , headers:{"authorization": "Bearer " + token}}).then((res)=>{
 return res.json()
 }).then((response)=>{
   if(response.name === "TokenExpiredError"){

@@ -15,7 +15,7 @@ const Login = () => {
 
 const login = (e)=>{
 e.preventDefault()
-fetch('http://localhost:5500/login', {  method:'POST',body:JSON.stringify(credentials), headers:{'Content-Type':'application/json'}}).then((res)=>{
+fetch('https://different-lingerie-goat.cyclic.app/login', {  method:'POST',body:JSON.stringify(credentials), headers:{'Content-Type':'application/json'}}).then((res)=>{
     return res.json()
 }).then((token)=>{
   console.log(token)

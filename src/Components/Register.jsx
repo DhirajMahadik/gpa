@@ -19,7 +19,7 @@ const Register = () => {
         e.preventDefault()
         if(user.password === user.confirmPassword){
             // alert(JSON.stringify(user))
-            fetch('http://localhost:5500/add-user', {method:"POST", body:JSON.stringify({fullname:user.fullname, email:user.email, phone:user.phone, password:user.password}), headers:{'Content-Type':'application/json'}},)
+            fetch('https://different-lingerie-goat.cyclic.app/add-user', {method:"POST", body:JSON.stringify({fullname:user.fullname, email:user.email, phone:user.phone, password:user.password}), headers:{'Content-Type':'application/json'}},)
             .then((res)=>{
                 if(res.status === 200){
                     navigate('/')
