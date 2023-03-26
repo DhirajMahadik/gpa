@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { HomeStyled } from '../StyledComponents/HomeStyled'
 import { PersonCircle } from 'react-bootstrap-icons'
+import { useNavigate } from 'react-router-dom'
 
 
 
 const Home = () => {
-
+const navigate = useNavigate()
 const [task, setTask] = useState({
   title:"", content:"", date:Date()
 })
@@ -19,7 +20,16 @@ setTask({...task, [e.target.name]: e.target.value})
 
 const onSubmitHandler = (e) =>{
   e.preventDefault();
-  fetch('http://localhost:5500/add-task', {method:"POST", body:JSON.stringify(Object.assign({task , id:user._id})), headers:{'Content-Type': 'application/json'}})
+  fetch('http://localhost:5500/add-task', {method:"POST", body:JSON.stringify(Object.assign({task , id:user.id})), headers:{'Content-Type': 'application/json'}}).then((res)=>{
+    if(res.status === 200){
+      getProfile()
+    }
+  })
+}
+
+const logoutHandler = () =>{
+  localStorage.removeItem('auth_token')
+  navigate('/')
 }
 
 // useMemo(()=>{
@@ -28,13 +38,32 @@ const onSubmitHandler = (e) =>{
 
 console.log(task)
 
-useEffect(()=>{
-fetch('http://localhost:5500/user/640eeb768414ce18ce82b9a1',{method:"GET"}).then((res)=>{
+const getProfile =()=>{
+  let token = localStorage.getItem('auth_token')
+  console.log(token)
+
+fetch('http://localhost:5500/user-profile',{method:"GET" , headers:{"authorization": "Bearer " + token}}).then((res)=>{
 return res.json()
-}).then((user)=>{
-  console.log(user)
-  setUser(user)
+}).then((response)=>{
+  if(response.name === "TokenExpiredError"){
+    navigate('/')
+  }else{
+    console.log(response)
+    setUser(response)
+  }
+
 })
+}
+
+useEffect(()=>{
+  let token = localStorage.getItem('auth_token')
+  if(token){
+    getProfile()
+  }else{
+    navigate('/')
+  }
+ 
+  
 },[])
   
 
@@ -46,7 +75,7 @@ return res.json()
         </div>
         <div className='profile-icon'>
           <PersonCircle />
-          <h4>{`${user.name} ${user.lastName}`}</h4>
+          <h4>{user.fullname}</h4>
         </div>
 
         <div className='basic-info'>
@@ -68,7 +97,7 @@ return res.json()
 
         </div>
         <div className='logout'>
-          <button type='button'>Logout</button>
+          <button type='button' onClick={logoutHandler}>Logout</button>
         </div>
 
       </div>
@@ -101,9 +130,9 @@ return res.json()
                 <span>{element.content}</span>
               </div>
               <div className='task-actions'>
-                <button>Edit</button>
-                <button>Completed</button>
-                <button>Delete</button>
+                <button className='edit'>Edit</button>
+                <button className='complete'>Completed</button>
+                <button className='delete'>Delete</button>
               </div>
             </div>
           })}

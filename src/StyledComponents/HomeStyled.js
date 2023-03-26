@@ -147,13 +147,16 @@ display: flex;
             border-radius: 5px;
             box-shadow: #80808087 0px 0px 20px 0px;
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
             .date-time{
                 display: flex;
+                margin: 5px;
                 flex-direction: column;
                 padding: 15px;
-                border-right: solid gray 1px;
+                border-radius: 20px;
+                /* border-right: solid gray 1px; */
                 width: 150px;
+                background-color: rgb(57 147 171 / 53%);
                 h5{
                     text-align: center;
                     text-transform: uppercase;
@@ -163,12 +166,12 @@ display: flex;
                 }
             }
             .task-content{
-                width: 500px;
+                width: -webkit-fill-available;
                 padding: 15px;
                 display: flex;
                 flex-direction: column;
                 h5{
-                    text-align: center;
+                    /* text-align: center; */
                     /* border-bottom: solid #000 1px; */
                     text-transform: uppercase;
                 }
@@ -177,11 +180,39 @@ display: flex;
                 }
             }
             .task-actions{
+               display: flex;
+               flex-direction: column;
+                margin: 5px;
+                border-radius: 20px;
                 padding: 10px;
                 border-left: solid gray 1px;
-                button{
-                    margin: 5px;
+                background-color: #d1d1d1;
+                .edit{
+                    margin: 5px auto ;
+                    padding: 5px 10px;
+                    border-radius: 10px;
                     display: block;
+                    border: none;
+                    background: green;
+                    color: #fff;
+                }
+                .complete{
+                    margin: 5px auto ;
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    display: block;
+                    border: none;
+                    background: #20dac4;
+                    color: #000;
+                }
+                .delete{
+                    margin: 5px auto ;
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    display: block;
+                    border: none;
+                    background: red;
+                    color: #fff;
                 }
             }
         }
