@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import { HomeStyled } from '../StyledComponents/HomeStyled'
 import { PersonCircle } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
@@ -62,8 +62,7 @@ useEffect(()=>{
   }else{
     navigate('/')
   }
- 
-  
+ // eslint-disable-next-line 
 },[])
   
 
