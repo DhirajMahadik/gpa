@@ -51,7 +51,7 @@ fetch('https://different-lingerie-goat.cyclic.app/login', {  method:'POST',body:
           <span></span>
           <span></span>
           <span></span>
-          Submit
+          Login
         </button>
       </form>
       <h6 className='my-2'>don't have accout <Link to="/register">Register</Link></h6>
