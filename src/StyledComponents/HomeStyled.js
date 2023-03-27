@@ -312,5 +312,17 @@ display: flex;
 }
 }
 
+@media screen and (max-width: 900px) {
+    flex-direction: column;
+    .profile-info{
+        height: 100%;
+        display: block;
+        width: 100%;
+        .logout{
+            bottom: auto;
+            position: unset;
+        }
+    }
+  }
 
 `;
