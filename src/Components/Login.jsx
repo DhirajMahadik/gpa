@@ -1,60 +1,168 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginStyled } from '../StyledComponents/LoginStyled'
+import data from '../authData.json'
 
 
 const Login = () => {
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
-    email:"", password:""
+    email: "", password: ""
+  })
+  // console.log(data)
+  const onChangeHandler = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
+
+  const login = (e) => {
+    e.preventDefault()
+    fetch('https://different-lingerie-goat.cyclic.app/login', { method: 'POST', body: JSON.stringify(credentials), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+      return res.json()
+    }).then((token) => {
+      console.log(token)
+      if (token.token) {
+        localStorage.setItem("auth_token", token.token)
+        navigate('/user-profile')
+      } else {
+        alert(token.error)
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+  ////////////////////////////////////////////
+  let pass = []
+  const [rightPannel, setRightPannel] = useState(false)
+  const [passData, setPassData] = useState([])
+  const [registerUser, setRegisterUser] = useState({
+    fullname: "", email: ""
   })
 
-  const onChangeHandler = (e) =>{
-    setCredentials({...credentials, [e.target.name]: e.target.value})
+
+
+  const addPass = (passValue) => {
+    let index = pass.findIndex((element) => {
+      return element === passValue
+    })
+    if (index === -1) {
+      pass.push(passValue)
+      console.log(pass)
+      // setRegisterUser({...registerUser, password:pass})
+    } else {
+      pass.splice(index, 1)
+      console.log(pass)
+      // setRegisterUser({...registerUser,  password:pass})
+    }
   }
 
-const login = (e)=>{
-e.preventDefault()
-fetch('https://different-lingerie-goat.cyclic.app/login', {  method:'POST',body:JSON.stringify(credentials), headers:{'Content-Type':'application/json'}}).then((res)=>{
-    return res.json()
-}).then((token)=>{
-  console.log(token)
-  if(token.token){
-    localStorage.setItem("auth_token", token.token)
-    navigate('/user-profile')
-  }else{
-    alert(token.error)
+  const SignUpButtonClick = () => {
+    setRightPannel(true)
   }
-}).catch((err)=>{
-  console.log(err)
-})
-}
+
+  const SignINButtonClick = () => {
+    setRightPannel(false)
+  }
+
+  const onChangeHandlerRegister = (e) => {
+    setRegisterUser({ ...registerUser, [e.target.name]: e.target.value })
+  }
+
+
+
+  const shuffleArray = (array) => {
+    for (var i = array.length - 1; i > 0; i--) {
+      // Generate random number 
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+  setInterval(() => {
+    setPassData(shuffleArray(data.data))
+
+  }, 10000)
+
+
+
+
+  const OnRegister = (e) => {
+    e.preventDefault()
+    console.log(registerUser)
+    console.log("password is : " + pass.toString())
+
+    // alert(JSON.stringify(user))
+    fetch('https://different-lingerie-goat.cyclic.app/add-user', { method: "POST", body: JSON.stringify({ fullname: registerUser.fullname, email: registerUser.email, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } },)
+      .then((res) => {
+        if (res.status === 200) {
+          navigate('/')
+        } else {
+          alert("Something went wrong")
+        }
+      })
+
+
+  }
+
+
+
+  useEffect(() => {
+    setPassData(shuffleArray(data.data))
+    // eslint-disable-next-line
+  }, [])
+
+
 
   return (
     <LoginStyled className="login-box">
-      <samp> For testing purpose use </samp> <br />
-      <samp>usename : "demo@gmail.com"</samp><br />
-      <samp>password : "demo".</samp>
+      <div className={`container ${rightPannel ? "right-panel-active" : ""}`} id="container">
+        <div className="form-container sign-up-container">
+          <form onSubmit={OnRegister}>
+            <h1>Create Account</h1>
+            <input type="text" placeholder="Name" name='fullname' value={registerUser.fullname} onChange={onChangeHandlerRegister} />
+            <input type="email" placeholder="Email" id="upmail" name='email' value={registerUser.email} onChange={onChangeHandlerRegister} />
+            {/* <input type="password" placeholder="Password" />  */}
+            <div className="password">
+              {passData.map((element) => {
+                return <div className="passimg" onClick={() => addPass(element.value)} id="s01"><img src={element.image} alt="" className="patimg" /></div>
+              })}
 
-      <h2>Login</h2>
-      <form onSubmit={login}>
-        <div className="user-box">
-          <input type="email" name="email" onChange={onChangeHandler} value={credentials.email} required="" />
-          <label>Username</label>
+            </div>
+            <button id="signupbtn" onclick="signup()">Sign Up</button>
+          </form>
         </div>
-        <div className="user-box">
-          <input type="password" name="password" onChange={onChangeHandler} value={credentials.password} required="" />
-          <label>Password</label>
+        <div className="form-container sign-in-container">
+          <form action="#">
+            <h1>Sign in</h1>
+
+            <input type="email" placeholder="Email" id="inmail" />
+            <div className="password">
+              {passData.map((element) => {
+                return <div className="passimg" onClick={() => addPass(element.value)} id="zz"><img src={element.image} alt="" className="patimg" /></div>
+              })}
+
+            </div>
+            <a onclick="sendMail2()">Forgot your password?</a>
+            <button onclick="signin()">Sign In</button>
+          </form>
         </div>
-        <button type='submit' >
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          Login
-        </button>
-      </form>
-      <h6 className='my-2'>don't have accout <Link to="/register">Register</Link></h6>
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-left">
+              <h1>Hi👋,there!</h1>
+              <p>Enter your personal details and start journey with us</p>
+              <button className="ghost" id="signIn" onClick={SignINButtonClick}>Sign In</button>
+            </div>
+            <div className="overlay-panel overlay-right">
+              <h1>Welcome Back!</h1>
+              <p>To keep connected with us please login with your personal info</p>
+              <button className="ghost" id="signUp" onClick={SignUpButtonClick}>Sign Up</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </LoginStyled>
   )
 }
