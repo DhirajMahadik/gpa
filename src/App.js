@@ -4,6 +4,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle'
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import ForgetPass from "./Components/ForgetPass";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
    <BrowserRouter>
    <Routes>
     <Route path="/" element={<Login/>}/>
+    <Route path="/forget-password" element={<ForgetPass/>}/>
     <Route path="/register" element={<Register/>}/>
       <Route path="/user-profile" element={<Home/>}/>
    </Routes>

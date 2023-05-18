@@ -4,7 +4,7 @@ export const LoginStyled = styled.div`
 
 
 font-family: 'Montserrat', sans-serif;
-    background: #f6f5f7;
+    background: lightgray;
 
   
     display: flex;
@@ -12,7 +12,7 @@ font-family: 'Montserrat', sans-serif;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: -20px 0 50px ;
+    /* margin: -20px 0 50px ; */
   /* @media screen and (max-width: 380px) {
     width: 350px;
   } */
@@ -62,7 +62,7 @@ input{
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 550px;
 }
 
 .form-container form {
@@ -255,6 +255,7 @@ button.ghost{
     grid-template-columns: auto auto auto auto auto;
     background-color: #a03333;
     padding: 5px;
+    margin:10px 0;
     cursor: pointer;
 }
 

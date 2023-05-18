@@ -1,22 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import { LoginStyled } from '../StyledComponents/LoginStyled'
 import data from '../authData.json'
+import { Link } from 'react-router-dom'
 
 
 const Login = () => {
   const navigate = useNavigate()
-  const [credentials, setCredentials] = useState({
-    email: "", password: ""
-  })
+  const [loginMail, setLoginMail] = useState("")
+  // const [emailVerified, setEmailVerified] = useState(false)
   // console.log(data)
-  const onChangeHandler = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-  }
+ 
 
   const login = (e) => {
     e.preventDefault()
-    fetch('https://different-lingerie-goat.cyclic.app/login', { method: 'POST', body: JSON.stringify(credentials), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    setLoginMail('')
+    fetch('http://localhost:5500/login', { method: 'POST', body: JSON.stringify({email:loginMail, password:pass.toString()}), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       return res.json()
     }).then((token) => {
       console.log(token)
@@ -90,18 +89,26 @@ const Login = () => {
 
   const OnRegister = (e) => {
     e.preventDefault()
-    console.log(registerUser)
-    console.log("password is : " + pass.toString())
-
-    // alert(JSON.stringify(user))
-    fetch('https://different-lingerie-goat.cyclic.app/add-user', { method: "POST", body: JSON.stringify({ fullname: registerUser.fullname, email: registerUser.email, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } },)
-      .then((res) => {
-        if (res.status === 200) {
-          navigate('/')
-        } else {
-          alert("Something went wrong")
-        }
+    // if(emailVerified){
+      console.log(registerUser)
+      // console.log("password is : " + pass.toString())
+      setRegisterUser({
+        fullname: "", email: ""
       })
+      // alert(JSON.stringify(user))
+      fetch('http://localhost:5500/add-user', { method: "POST", body: JSON.stringify({ fullname: registerUser.fullname, email: registerUser.email, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } },)
+        .then((res) => {
+          if (res.status === 200) {
+            alert("Registration Successfull")
+            navigate('/')
+          } else {
+            alert("Something went wrong")
+          }
+        })
+    // }else{
+    //   alert("Please verify your email")
+    // }
+    
 
 
   }
@@ -121,31 +128,33 @@ const Login = () => {
         <div className="form-container sign-up-container">
           <form onSubmit={OnRegister}>
             <h1>Create Account</h1>
-            <input type="text" placeholder="Name" name='fullname' value={registerUser.fullname} onChange={onChangeHandlerRegister} />
-            <input type="email" placeholder="Email" id="upmail" name='email' value={registerUser.email} onChange={onChangeHandlerRegister} />
+            <input required type="text" placeholder="Name" name='fullname' value={registerUser.fullname} onChange={onChangeHandlerRegister} />
+            <input required type="email" placeholder="Email" id="upmail" name='email' value={registerUser.email} onChange={onChangeHandlerRegister} />
             {/* <input type="password" placeholder="Password" />  */}
             <div className="password">
-              {passData.map((element) => {
-                return <div className="passimg" onClick={() => addPass(element.value)} id="s01"><img src={element.image} alt="" className="patimg" /></div>
+              {passData.map((element, index) => {
+                return <div key={index} className="passimg" onClick={() => addPass(element.value)} id="s01"><img src={element.image} alt="" className="patimg" /></div>
               })}
 
             </div>
-            <button id="signupbtn" onclick="signup()">Sign Up</button>
+            <button type='submit' id="" >Sign Up</button>
           </form>
         </div>
         <div className="form-container sign-in-container">
-          <form action="#">
+          <form onSubmit={login}>
             <h1>Sign in</h1>
 
-            <input type="email" placeholder="Email" id="inmail" />
+            <input required type="email" placeholder="Email" id="inmail" value={loginMail} onChange={(e)=>setLoginMail(e.target.value)} />
             <div className="password">
-              {passData.map((element) => {
-                return <div className="passimg" onClick={() => addPass(element.value)} id="zz"><img src={element.image} alt="" className="patimg" /></div>
+              {passData.map((element, index) => {
+                return <div key={index} className="passimg" onClick={() => addPass(element.value)} id="zz"><img src={element.image} alt="" className="patimg" /></div>
               })}
 
             </div>
-            <a onclick="sendMail2()">Forgot your password?</a>
-            <button onclick="signin()">Sign In</button>
+            {/* <a onclick="sendMail2()">Forgot your password?</a> */}
+            <button type='submit' >Sign In</button>
+            <span > <Link to="/forget-password">Forget password</Link></span>
+            
           </form>
         </div>
         <div className="overlay-container">
