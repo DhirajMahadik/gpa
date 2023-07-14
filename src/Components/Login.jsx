@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { LoginStyled } from '../StyledComponents/LoginStyled'
 import data from '../authData.json'
 import { Link } from 'react-router-dom'
@@ -8,14 +8,11 @@ import { Link } from 'react-router-dom'
 const Login = () => {
   const navigate = useNavigate()
   const [loginMail, setLoginMail] = useState("")
-  // const [emailVerified, setEmailVerified] = useState(false)
-  // console.log(data)
- 
 
   const login = (e) => {
     e.preventDefault()
     setLoginMail('')
-    fetch('http://localhost:5500/login', { method: 'POST', body: JSON.stringify({email:loginMail, password:pass.toString()}), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/login', { method: 'POST', body: JSON.stringify({ email: loginMail, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       return res.json()
     }).then((token) => {
       console.log(token)
@@ -29,7 +26,7 @@ const Login = () => {
       console.log(err)
     })
   }
-  ////////////////////////////////////////////
+  
   let pass = []
   const [rightPannel, setRightPannel] = useState(false)
   const [passData, setPassData] = useState([])
@@ -46,11 +43,11 @@ const Login = () => {
     if (index === -1) {
       pass.push(passValue)
       console.log(pass)
-      // setRegisterUser({...registerUser, password:pass})
+
     } else {
       pass.splice(index, 1)
       console.log(pass)
-      // setRegisterUser({...registerUser,  password:pass})
+
     }
   }
 
@@ -89,28 +86,20 @@ const Login = () => {
 
   const OnRegister = (e) => {
     e.preventDefault()
-    // if(emailVerified){
-      console.log(registerUser)
-      // console.log("password is : " + pass.toString())
-      setRegisterUser({
-        fullname: "", email: ""
+    console.log(registerUser)
+    setRegisterUser({
+      fullname: "", email: ""
+    })
+
+    fetch('https://tiny-plum-dog-tam.cyclic.app/add-user', { method: "POST", body: JSON.stringify({ fullname: registerUser.fullname, email: registerUser.email, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } },)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Registration Successfull")
+          navigate('/')
+        } else {
+          alert("Something went wrong")
+        }
       })
-      // alert(JSON.stringify(user))
-      fetch('http://localhost:5500/add-user', { method: "POST", body: JSON.stringify({ fullname: registerUser.fullname, email: registerUser.email, password: pass.toString() }), headers: { 'Content-Type': 'application/json' } },)
-        .then((res) => {
-          if (res.status === 200) {
-            alert("Registration Successfull")
-            navigate('/')
-          } else {
-            alert("Something went wrong")
-          }
-        })
-    // }else{
-    //   alert("Please verify your email")
-    // }
-    
-
-
   }
 
 
@@ -120,8 +109,6 @@ const Login = () => {
     // eslint-disable-next-line
   }, [])
 
-
-
   return (
     <LoginStyled className="login-box">
       <div className={`container ${rightPannel ? "right-panel-active" : ""}`} id="container">
@@ -130,7 +117,6 @@ const Login = () => {
             <h1>Create Account</h1>
             <input required type="text" placeholder="Name" name='fullname' value={registerUser.fullname} onChange={onChangeHandlerRegister} />
             <input required type="email" placeholder="Email" id="upmail" name='email' value={registerUser.email} onChange={onChangeHandlerRegister} />
-            {/* <input type="password" placeholder="Password" />  */}
             <div className="password">
               {passData.map((element, index) => {
                 return <div key={index} className="passimg" onClick={() => addPass(element.value)} id="s01"><img src={element.image} alt="" className="patimg" /></div>
@@ -144,17 +130,16 @@ const Login = () => {
           <form onSubmit={login}>
             <h1>Sign in</h1>
 
-            <input required type="email" placeholder="Email" id="inmail" value={loginMail} onChange={(e)=>setLoginMail(e.target.value)} />
+            <input required type="email" placeholder="Email" id="inmail" value={loginMail} onChange={(e) => setLoginMail(e.target.value)} />
             <div className="password">
               {passData.map((element, index) => {
                 return <div key={index} className="passimg" onClick={() => addPass(element.value)} id="zz"><img src={element.image} alt="" className="patimg" /></div>
               })}
 
             </div>
-            {/* <a onclick="sendMail2()">Forgot your password?</a> */}
-            <button type='submit' >Sign In</button>
+            <button className='my-4' type='submit' >Sign In</button>
             <span > <Link to="/forget-password">Forget password</Link></span>
-            
+
           </form>
         </div>
         <div className="overlay-container">

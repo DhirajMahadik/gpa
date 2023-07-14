@@ -9,7 +9,7 @@ const ForgetPass = () => {
 
     const onSubmitHandler = (e)=>{
         e.preventDefault()
-        fetch('http://localhost:5500/forget-pass',{method:"POST", headers: { 'Content-Type': 'application/json' }  , body:JSON.stringify({email:email})} ).then((res)=>{
+        fetch('https://tiny-plum-dog-tam.cyclic.app/forget-pass',{method:"POST", headers: { 'Content-Type': 'application/json' }  , body:JSON.stringify({email:email})} ).then((res)=>{
             return res.json()
         }).then((msg)=>{
             setmsgData(msg.msg)

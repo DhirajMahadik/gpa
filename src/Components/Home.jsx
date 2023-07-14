@@ -37,7 +37,7 @@ const Home = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    fetch('http://localhost:5500/add-task', { method: "POST", body: JSON.stringify(Object.assign({ task, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/add-task', { method: "POST", body: JSON.stringify(Object.assign({ task, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       if (res.status === 200) {
         setTask({title:"", content:""})
         getProfile()
@@ -46,7 +46,7 @@ const Home = () => {
   }
 
   const updateProfile =()=>{
-    fetch('http://localhost:5500/edit-profile', { method: "POST", body: JSON.stringify(Object.assign({ fullname:profileInfo.fullname, email:profileInfo.email, phone:profileInfo.phone, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/edit-profile', { method: "POST", body: JSON.stringify(Object.assign({ fullname:profileInfo.fullname, email:profileInfo.email, phone:profileInfo.phone, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       if (res.status === 200) {
         getProfile()
       }
@@ -58,7 +58,7 @@ const Home = () => {
   const onEditSubmitHandler = (e) => {
     e.preventDefault();
     console.log(editTask)
-    fetch('http://localhost:5500/edit-task', { method: "PUT", body: JSON.stringify(Object.assign({ editTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/edit-task', { method: "PUT", body: JSON.stringify(Object.assign({ editTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       if (res.status === 200) {
         getProfile()
       }
@@ -66,7 +66,7 @@ const Home = () => {
   }
 
   const deleteTask = (selectedTask) => {
-    fetch('http://localhost:5500/delete-task', { method: "POST", body: JSON.stringify(Object.assign({ selectedTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/delete-task', { method: "POST", body: JSON.stringify(Object.assign({ selectedTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       if (res.status === 200) {
         getProfile()
       }
@@ -74,7 +74,7 @@ const Home = () => {
   }
 
   const completeTask = (selectedTask) => {
-    fetch('http://localhost:5500/complete-task', { method: "POST", body: JSON.stringify(Object.assign({ selectedTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/complete-task', { method: "POST", body: JSON.stringify(Object.assign({ selectedTask, id: user.id })), headers: { 'Content-Type': 'application/json' } }).then((res) => {
       if (res.status === 200) {
         getProfile()
       }
@@ -96,7 +96,7 @@ const Home = () => {
     let token = localStorage.getItem('auth_token')
     console.log(token)
 
-    fetch('http://localhost:5500/user-profile', { method: "GET", headers: { "authorization": "Bearer " + token } }).then((res) => {
+    fetch('https://tiny-plum-dog-tam.cyclic.app/user-profile', { method: "GET", headers: { "authorization": "Bearer " + token } }).then((res) => {
       return res.json()
     }).then((response) => {
       if (response.name === "TokenExpiredError") {
