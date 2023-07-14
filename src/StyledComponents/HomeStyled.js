@@ -183,13 +183,19 @@ display: flex;
                 }
             }
             .task-actions{
-               display: flex;
+               /* display: flex;
                flex-direction: column;
                 margin: 5px;
                 border-radius: 20px;
                 padding: 10px;
                 border-left: solid gray 1px;
-                background-color: #d1d1d1;
+                background-color: #d1d1d1; */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin: 5px;
+                border-radius: 20px;
+                padding: 10px;
                 .edit{
                     margin: 5px auto ;
                     padding: 5px 10px;
@@ -322,6 +328,14 @@ display: flex;
             bottom: auto;
             position: unset;
         }
+    }
+
+    .task{
+        flex-direction: column;
+        
+    }
+    .task-actions{
+            flex-direction: row !important;
     }
   }
 
